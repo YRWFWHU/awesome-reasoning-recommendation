@@ -6,7 +6,7 @@
 
 [入门路线](#start-here) · [论文清单](#papers) · [近期必读](#frontier) · [前沿地图](docs/frontier-map.md) · [方法对照](docs/method-matrix.md) · [证据卡片](docs/frontier-reading.md) · [基准选型](docs/benchmarks.md) · [参与贡献](CONTRIBUTING.md)
 
-**最近整理：2026-09-15** · 52 篇文献：40 篇核心方法、6 项基准、2 篇评测研究、1 篇综述、3 篇背景 · 17 篇精选卡片
+**最近整理：2026-09-15** · 81 篇文献：62 篇核心方法、6 项基准、6 篇评测研究、1 篇综述、6 篇背景 · 17 篇精选卡片
 
 ## 收录范围
 
@@ -35,6 +35,7 @@
 | 如何用强化学习优化推荐推理 | [RecZero / RecOne](#paper-reczero) → [GR2](#paper-gr2) → [SAPO](#paper-sapo) | 奖励优化的是最终结果，还是具体推理步骤？ |
 | 增加推理计算能做什么 | [ReaRec](#paper-rearec) → [TTR](#paper-ttr) → [PROMISE](#paper-promise) | 增加的是隐状态迭代、验证还是搜索？ |
 | 潜在推理怎样发展 | [LatentR³](#paper-latent-r3) → [FLR](#paper-flr) → [LaRec](#paper-larec) → [HiLaR](#paper-hilar) | 连续状态怎样初始化、分工和获得监督？ |
+| 潜在推理怎样与 SID 交叉 | [S²GR](#paper-s2gr) → [LASAR](#paper-lasar) → [IBA](#paper-where-reasoning-matters)；对照 [Latte](#paper-latte)、[BARGE](#paper-barge) | 表示结构、连续计算和离散搜索如何共同影响效果？ |
 | 如何控制推理成本 | [WhisperRec](#paper-whisperrec) → [EvoReason](#paper-evoreason) → [rEDMRec](#paper-redmrec) → [SelfDR](#paper-selfdr) | 蒸馏进入参数、潜在状态，还是外部记忆？ |
 | 如何自适应分配计算 | [DTRec](#paper-dtrec) → [ManCAR](#paper-mancar) → [EGLR](#paper-eglr) → [IBA](#paper-where-reasoning-matters) | 停止条件、列表位置和总预算怎样控制？ |
 | 如何评估推理价值 | [评测指南](docs/evaluation.md) → [τ-Rec](#paper-tau-rec) → [RPCBench](#paper-rpcbench) | 排名准确之外，约束与证据是否可靠？ |
@@ -53,7 +54,7 @@
 <a id="frontier"></a>
 ## 前沿阅读导航
 
-本轮新增 29 篇，补齐潜在推理、训练与预测预算的分离、过程奖励、推理内化和开放评测。以下按研究问题选读；完整的控制实验建议见 [8 个研究方向](docs/frontier-map.md)。
+前沿扩充后，本次另补 29 篇 SID 与推理交叉及必要对照文献，连接编码结构、逐步潜在推理和路径搜索。以下按研究问题选读；完整的控制实验建议见 [8 个研究方向](docs/frontier-map.md)。
 
 | 近期入口 | 为什么读 | 证据边界 |
 | --- | --- | --- |
@@ -73,14 +74,14 @@
 ## 论文清单
 
 - [思维链与推理学习](#cot)（7）
-- [潜在推理与偏好表示](#latent)（5）
+- [潜在推理与偏好表示](#latent)（16）
 - [强化学习与奖励设计](#rl)（9）
-- [推理时扩展与自适应预算](#tts)（7）
-- [推理蒸馏与效率](#distillation)（7）
-- [交互与智能体推荐](#agents)（5）
-- [评测、基准与有效性证据](#benchmarks)（8）
+- [推理时扩展与自适应预算](#tts)（12）
+- [推理蒸馏与效率](#distillation)（11）
+- [交互与智能体推荐](#agents)（7）
+- [评测、基准与有效性证据](#benchmarks)（12）
 - [综述与研究路线](#surveys)（1）
-- [相关背景](#background)（3）
+- [相关背景](#background)（6）
 
 <a id="cot"></a>
 ## 思维链与推理学习
@@ -148,10 +149,29 @@
 
 [论文](https://arxiv.org/abs/2408.06276) · [官方代码](https://github.com/jieyong99/EXP3RT)
 
+
 <a id="latent"></a>
 ## 潜在推理与偏好表示
 
 连续状态如何初始化、分解和接受监督是本类的主线；预算控制另见 [推理时扩展](#tts)，轨迹压缩另见 [推理蒸馏](#distillation)。
+
+<a id="paper-recgpt-v3"></a>
+### RecGPT-V3：RecGPT-V3 Technical Report
+
+**2026-07 · arXiv** · `工业推荐` `潜在推理` `SID` `记忆`
+
+以持续更新的用户记忆连接文本标签与 SID，并把显式意图分析压缩为可学习潜在 token；需分别核算记忆维护、训练与在线推理成本。
+
+[论文](https://arxiv.org/abs/2607.15591) · 官方代码：未核实
+
+<a id="paper-recrec"></a>
+### RecRec：RecRec: Latent Interests Recursive Reasoning for Sequential Recommendation
+
+**2026-07 · arXiv** · `序列推荐` `潜在推理` `多兴趣`
+
+将历史压缩为多个兴趣向量，在独立中间空间循环细化，再用于预测；通过深度监督支持调整推理步数，训练不依赖 RL。
+
+[论文](https://arxiv.org/abs/2607.12945) · 官方代码：未核实
 
 <a id="paper-hilar"></a>
 ### Hierarchical Latent Reasoning for LLM-based Recommendation（HiLaR）
@@ -171,6 +191,15 @@
 
 [论文](https://arxiv.org/abs/2607.24617) · 官方代码：未核实 · [证据卡片](docs/frontier-reading.md#larec)
 
+<a id="paper-calir"></a>
+### CaLIR：Beyond Matching: Category-Guided Latent Intent Reasoning for Generative Retrieval in E-Commerce
+
+**2026-06 · arXiv** · `商品检索` `潜在推理` `SID`
+
+在生成商品 SID 前执行类别引导的连续意图推理，结合多意图训练与查询相关前缀树。实验任务是电商搜索，不能直接视为序列推荐结论。
+
+[论文](https://arxiv.org/abs/2606.07075) · 官方代码：未核实
+
 <a id="paper-inturec"></a>
 ### Intuition-Guided Latent Reasoning for LLM-Based Recommendation（IntuRec）
 
@@ -179,6 +208,24 @@
 先生成候选物品，再将候选转为偏好先验，初始化并引导后续潜在推理。`潜在推理`
 
 [论文](https://arxiv.org/abs/2606.27684) · [官方代码](https://github.com/Ten-Mao/IntuRec)
+
+<a id="paper-pauserec"></a>
+### PauseRec: Implicit Reasoning for Large Language Model-based Generative Recommendation
+
+**2026-06 · arXiv** · `潜在推理`
+
+先预训练 pause token 连接语言与 SID 表示，再在物品预测前插入 pause 位置，仅用目标 SID 损失学习隐式计算；不要求文本理由监督。
+
+[论文](https://arxiv.org/abs/2606.14142) · 官方代码：未核实
+
+<a id="paper-lasar"></a>
+### LASAR: Latent Adaptive Semantic Aligned Reasoning for Generative Recommendation
+
+**2026-05 · arXiv** · `潜在推理` `语义ID` `自适应深度`
+
+先学习 SID 语义，再引入循环隐状态反馈；以教师 CoT 的语义锚点约束潜在轨迹，并学习每个样本的推理深度。
+
+[论文](https://arxiv.org/abs/2605.10207) · 官方代码：未核实
 
 <a id="paper-flr"></a>
 ### Factorized Latent Reasoning for LLM-based Recommendation（FLR）
@@ -189,6 +236,60 @@
 
 [论文](https://arxiv.org/abs/2604.26760) · [官方代码](https://github.com/ToAdventure/FLR)
 
+<a id="paper-coderrec"></a>
+### CoderRec: Cross-Scale Collaboration between LLMs and Lightweight Sequential Recommenders with Domain-Specific Latent Reasoning
+
+**2026-03 · AAAI 2026 正式出版** · `潜在推理`
+
+以轻量序列模型的表示作为领域潜在思考，使用跨规模模型协作与两阶段训练，将 LLM 的 SID 语义持续传递给下游推荐模型。
+
+[论文](https://ojs.aaai.org/index.php/AAAI/article/view/38680) · 官方代码：未核实
+
+<a id="paper-diffureason"></a>
+### DiffuReason：DiffuReason: Bridging Latent Reasoning and Generative Refinement for Sequential Recommendation
+
+**2026-02 · arXiv** · `序列推荐` `潜在推理` `扩散` `GRPO`
+
+先用潜在思考形成意图假设，再通过扩散细化表示，并以 GRPO 联合对齐排名目标。
+
+[论文](https://arxiv.org/abs/2602.09744) · 官方代码：未核实
+
+<a id="paper-plr"></a>
+### PLR：Parallel Latent Reasoning for Sequential Recommendation
+
+**2026-01 · arXiv** · `序列推荐` `潜在推理` `并行计算`
+
+用多个连续推理流探索用户偏好，以多样性正则和混合聚合整合结果；扩展的是推理宽度，而非只增加单条链的深度。
+
+[论文](https://arxiv.org/abs/2601.03153) · 官方代码：未核实
+
+<a id="paper-s2gr"></a>
+### S²GR: Stepwise Semantic-Guided Reasoning in Latent Space for Generative Recommendation
+
+**2026-01 · arXiv** · `潜在推理` `语义ID` `过程监督`
+
+在每个 SID 码生成前插入潜在思考，用对应码本层次的语义分布监督中间状态，同时引入协同行为与码本均衡训练。
+
+[论文](https://arxiv.org/abs/2601.18664) · 官方代码：未核实
+
+<a id="paper-latent-cross"></a>
+### Latent Cross Reasoning：Bridging Search and Recommendation through Latent Cross Reasoning
+
+**2025-08 · arXiv** · `序列推荐` `搜索行为` `潜在推理`
+
+从搜索与推荐历史中形成兴趣表示，再迭代筛取对推荐有用的搜索证据；使用对比学习与强化学习对齐目标物品和排名。
+
+[论文](https://arxiv.org/abs/2508.04152) · 官方代码：未核实
+
+<a id="paper-lares"></a>
+### LARES：LARES: Latent Reasoning for Sequential Recommendation
+
+**2025-05 · arXiv** · `序列推荐` `潜在推理` `循环深度`
+
+在每个循环步骤细化全部输入 token，结合轨迹与步骤对齐预训练、强化后训练扩展潜在计算深度。
+
+[论文](https://arxiv.org/abs/2505.16865) · 官方代码：未核实
+
 <a id="paper-latent-r3"></a>
 ### Reinforced Latent Reasoning for LLM-based Recommendation（LatentR³）
 
@@ -197,6 +298,7 @@
 无需文本 CoT 监督，通过 SFT 初始化和改进 GRPO 学习连续潜在推理。`潜在推理`
 
 [论文](https://arxiv.org/abs/2505.19092) · [官方代码](https://github.com/xuwenxinedu/R3)
+
 
 <a id="rl"></a>
 ## 强化学习与奖励设计
@@ -282,10 +384,29 @@
 
 [论文](https://arxiv.org/abs/2505.16994) · [官方代码与模型入口](https://github.com/YRYangang/RRec)
 
+
 <a id="tts"></a>
 ## 推理时扩展与自适应预算
 
 分别标注潜在状态迭代、候选验证和结构化路径搜索；训练数据或训练 FLOPs 扩展不自动归入 TTS。
+
+<a id="paper-rgd"></a>
+### RGD：Reward Guided Decoding for Generative Recommendation
+
+**2026-07 · arXiv** · `生成式推荐` `搜索` `奖励引导`
+
+在 SID 解码期间用奖励模型调整路径概率，使高价值候选有机会在前缀阶段保留；固定生成器，通过测试时控制改变目标权重。
+
+[论文](https://arxiv.org/abs/2607.25344) · 官方代码：未核实
+
+<a id="paper-barge"></a>
+### BARGE: Bridging the Structural Gap: Adapting Autoregressive Generation for Recommendation
+
+**2026-07 · arXiv** · `结构化路径` `搜索` `语义ID`
+
+通过物品边界感知编码、层级路径重排与正交双通道解码，缓解早期 SID 选错导致目标路径不可达的问题。归入结构化搜索，不视为连续潜在推理。
+
+[论文](https://arxiv.org/abs/2607.21028) · 官方代码：未核实
 
 <a id="paper-where-reasoning-matters"></a>
 ### Where Reasoning Matters: Rethinking Latent Reasoning in Semantic ID-based Generative Recommendation（IBA）
@@ -295,6 +416,24 @@
 在固定总潜在步数下，根据位置的信息增益与预测收益分配语义 ID 的推理预算。`潜在推理`
 
 [论文](https://arxiv.org/abs/2607.12425) · 官方代码：未核实
+
+<a id="paper-v-star"></a>
+### V-STAR：Spend Search Where It Pays: Value-Guided Structured Sampling and Optimization for Generative Recommendation
+
+**2026-02 · arXiv** · `生成式推荐` `搜索` `RL`
+
+选择有价值的分叉节点投入搜索预算，并利用兄弟分支间的奖励差异学习；研究概率主导解码与奖励目标不一致的问题。
+
+[论文](https://arxiv.org/abs/2602.10699) · 官方代码：未核实
+
+<a id="paper-thinking-hurts"></a>
+### Why Thinking Hurts? Diagnosing and Rectifying the Reasoning Shift in Foundation Recommender Models
+
+**2026-02 · arXiv** · `CoT` `语义ID` `对比解码`
+
+分析显式理由生成中通用文本先验压过 SID 历史证据的现象，并用推理链压缩和偏差扣除的对比解码校正预测。
+
+[论文](https://arxiv.org/abs/2602.16587) · 官方代码：未核实
 
 <a id="paper-mancar"></a>
 ### ManCAR: Manifold-Constrained Latent Reasoning with Adaptive Test-Time Computation for Sequential Recommendation
@@ -332,6 +471,15 @@
 
 [论文](https://arxiv.org/abs/2512.14036) · 官方代码：未核实
 
+<a id="paper-reg4rec"></a>
+### REG4Rec: Reasoning-Enhanced Generative Model for Large-Scale Recommendation Systems
+
+**2025-08 · arXiv** · `生成式推荐` `搜索` `自我反思`
+
+以并行量化构造无序语义 token 和多条推理路径，通过偏好奖励与一致性自检选择路径。其结构化语义推理与连续潜在状态迭代需要分别比较。
+
+[论文](https://arxiv.org/abs/2508.15308) · 官方代码：未核实
+
 <a id="paper-ttr"></a>
 ### TTR: Test-Time Scaling Strategies for Generative Retrieval in Multimodal Conversational Recommendations
 
@@ -350,6 +498,7 @@
 
 [论文](https://arxiv.org/abs/2503.22675) · [官方代码](https://github.com/TangJiakai/ReaRec)
 
+
 <a id="distillation"></a>
 ## 推理蒸馏与效率
 
@@ -361,6 +510,15 @@
 由同一基座构建推理器、带理由的教师和直接推荐学生，用下游奖励优化推理，再把教师预测分布蒸馏给学生。训练期利用理由，预测期直接推荐；需同时记录离线训练成本。
 
 [论文](https://arxiv.org/abs/2609.03313) · [官方代码](https://github.com/JiangDeccc/SelfDistillation) · [证据卡片](docs/frontier-reading.md#selfdr)
+
+<a id="paper-tgr"></a>
+### TGR: Advancing Industrial Recommendation from Generative-Paradigm Ranking toward Unified Generation and Reasoning
+
+**2026-09 · arXiv** · `工业推荐` `训练期推理` `语义ID`
+
+其中 TGR-Reason 将潜在推理训练得到的信息离线导出为 reason tokens，注入线上生成器；请求路径不运行推理 rollout。报告还涵盖排序、物品与列表生成。
+
+[论文](https://arxiv.org/abs/2609.00986) · 官方代码：未核实
 
 <a id="paper-redmrec"></a>
 ### rEDMRec: Distilling Large Language Model Reasoning into an Editable Experience Memory for Recommendation
@@ -389,6 +547,33 @@
 
 [论文](https://arxiv.org/abs/2607.29010) · 官方代码：未核实 · [证据卡片](docs/frontier-reading.md#evoreason)
 
+<a id="paper-trialigngr"></a>
+### TriAlignGR: Triangular Multitask Alignment with Multimodal Deep Interest Mining for Generative Recommendation
+
+**2026-05 · arXiv** · `训练期推理` `CoT` `多模态` `SID`
+
+在离散化前用思维链提取兴趣、融合图文信息，再以 SID、文本与视觉描述的多任务训练对齐。推理主要参与离线语义构建，不等同预测时增加思考步数。
+
+[论文](https://arxiv.org/abs/2605.05249) · 官方代码：未核实
+
+<a id="paper-isrf"></a>
+### ISRF：Iterative Semantic Reasoning from Individual to Group Interests for Generative Recommendation with LLMs
+
+**2026-03 · arXiv** · `生成式推荐` `语义推理` `训练期推理`
+
+以多步属性推理构造物品语义和用户群体兴趣，再通过个体与群体信息的迭代优化改进推荐；应区分语义构建成本与预测成本。
+
+[论文](https://arxiv.org/abs/2603.13934) · 官方代码：未核实
+
+<a id="paper-deepinterestgr"></a>
+### DeepInterestGR：DeepInterestGR: Mining Deep Multi-Interest Using Multi-Modal LLMs for Generative Recommendation
+
+**2026-02 · arXiv** · `生成式推荐` `CoT` `多模态` `SID`
+
+通过多模态模型的思维链挖掘兴趣，将兴趣信息写入物品离散编码，并用于监督微调与奖励设计。收录为预印本，未采用正文模板中的会议标注。
+
+[论文](https://arxiv.org/abs/2602.18907) · 官方代码：未核实
+
 <a id="paper-star"></a>
 ### STAR: Internalizing Multi-Agent Reasoning for Accurate and Efficient LLM-based Recommendation
 
@@ -416,6 +601,7 @@
 
 [论文](https://arxiv.org/abs/2403.04260) · 官方代码：未核实
 
+
 <a id="agents"></a>
 ## 交互与智能体推荐
 
@@ -436,6 +622,24 @@
 用“视频 → 下一兴趣意图 → 后续视频”的路径生成和验证推荐关系，把推理得到的关系作为工业系统的额外召回通道。VLM 主要在离线或近线运行；论文报告的线上收益属于整条召回路径，不宜直接归因于某一个推理训练阶段。
 
 [论文](https://arxiv.org/abs/2607.24789) · 官方代码：未核实
+
+<a id="paper-twistar"></a>
+### TwiSTAR: Think Fast, Think Slow, Then Act, Generative Recommendation with Adaptive Reasoning
+
+**2026-05 · arXiv** · `工具选择`
+
+训练规划器在快速 SID 检索、候选重排与慢速显式推理之间选择，利用协同关系转写的理由训练慢模型，并计入不同工具的调用成本。
+
+[论文](https://arxiv.org/abs/2605.11553) · 官方代码：未核实
+
+<a id="paper-intent-sid"></a>
+### Intent-Driven Semantic ID Generation for Grounded Conversational News Recommendation
+
+**2026-05 · arXiv** · `对话推荐` `CoT蒸馏` `语义ID`
+
+用意图分析与教师思维链训练模型生成 SID 前缀，再与当前新闻池匹配；结合画像和行为证据处理冷启动，推荐项由实时语料库落地。
+
+[论文](https://arxiv.org/abs/2605.07613) · 官方代码：未核实
 
 <a id="paper-harpo"></a>
 ### HARPO: Hierarchical Agentic Reasoning for User-Aligned Conversational Recommendation
@@ -464,10 +668,11 @@
 
 [论文](https://arxiv.org/abs/2510.05598) · [阅读卡片](docs/reading-notes.md#agentdr) · 官方代码：未核实
 
+
 <a id="benchmarks"></a>
 ## 评测、基准与有效性证据
 
-包含 6 项评测资源与 2 篇有效性/协议研究。任务与指标不能直接合成统一排名，详见 [基准选型](docs/benchmarks.md)。
+包含 6 项评测资源与 3 篇有效性/协议研究。任务与指标不能直接合成统一排名，详见 [基准选型](docs/benchmarks.md)。
 
 <a id="paper-rpcbench"></a>
 ### RPCBench: A Benchmark for Proactive Premise Critique in LLM-based Recommendation
@@ -478,6 +683,15 @@
 
 [论文](https://arxiv.org/abs/2609.00918) · [官方代码](https://github.com/ZhongruChen/RPCBench)
 
+<a id="paper-sidscope"></a>
+### SIDScope：SIDScope: A Diagnostic Resource for Semantic-ID Interfaces in Generative Recommendation
+
+**2026-08 · arXiv** · `评测研究` `SID` `可达性`
+
+诊断物品到 SID 的映射结构、前缀候选暴露、路径到物品的解析及更新后的模型交接。它评估接口风险，不直接证明模型执行了潜在推理。
+
+[论文](https://arxiv.org/abs/2608.18779) · 官方代码：未核实
+
 <a id="paper-crs-protocol"></a>
 ### Retrieval, Scoring, and Decoding Shape Performance and Stability in LLM-based Conversational Recommendation
 
@@ -486,6 +700,15 @@
 在 ReDial 上统一候选后比较 LLM 与传统重排器，分析候选生成、池大小、计分规则及温度如何改变结论。适合作为推理推荐的评测方法论：它不提出新的推理模型，也不单独证明 CoT 的有效或无效。
 
 [论文](https://arxiv.org/abs/2609.00086) · [官方代码与输出](https://github.com/infobip/crs-performance) · [证据卡片](docs/frontier-reading.md#crs-protocol)
+
+<a id="paper-lime-rec"></a>
+### LIME-Rec: Auditing Semantic Gains in Sequential Recommendation: A Lightweight Recovery Test
+
+**2026-08 · arXiv** · `评测分析`
+
+用序列模型、物品共现与冻结文本表示的可检查分数融合，检验重型语义方法的收益能否由轻量模型获得；用物品—文本错配对照检查语义来源。
+
+[论文](https://arxiv.org/abs/2608.01260) · [官方代码](https://github.com/Double-wk/LIME-Rec)
 
 <a id="paper-disconnect"></a>
 ### The Disconnect Between Better Descriptive Reasoning Trace Quality and Recommendation Effectiveness
@@ -496,6 +719,15 @@
 
 [论文](https://arxiv.org/abs/2608.23154) · 官方代码：未核实 · [证据卡片](docs/frontier-reading.md#disconnect)
 
+<a id="paper-cold-sid"></a>
+### Temporal Cold SID：Can Generative Recommendation Reach Cold Items? A Temporal Perspective on Semantic-ID Generation
+
+**2026-07 · arXiv** · `评测研究` `SID` `冷启动`
+
+使用绝对时间划分与前缀探查，区分已有 token 的重组和包含未见 token 的新物品生成；检查冷物品在编码与解码空间中是否可达。
+
+[论文](https://arxiv.org/abs/2607.21101) · 官方代码：未核实
+
 <a id="paper-tau-rec"></a>
 ### τ-Rec: A Verifiable Benchmark for Agentic Recommender Systems
 
@@ -504,6 +736,15 @@
 通过结构化目录条件验证推荐，并控制多轮对话中的约束揭示方式，考察智能体的约束满足和连续成功可靠性。其 `pass^k` 与“多次采样至少成功一次”的 `pass@k` 口径不同。
 
 [论文](https://arxiv.org/abs/2606.10156) · [官方代码与数据入口](https://github.com/nbharaths/tau-rec)
+
+<a id="paper-faithful-sid"></a>
+### Faithful SID Evaluation：Faithful Evaluation of Semantic-ID Tokenizers for Generative Recommendation
+
+**2026-05 · arXiv** · `评测研究` `SID` `碰撞`
+
+区分命中 SID 与命中具体物品，分析编码碰撞引起的计分偏差，并提供物品级修正和消除碰撞的后处理。当前标题与初版不同，合并为一条。
+
+[论文](https://arxiv.org/abs/2605.25330) · 官方代码：未核实
 
 <a id="paper-conv-finre"></a>
 ### Conv-FinRe: A Conversational and Longitudinal Benchmark for Utility-Grounded Financial Recommendation
@@ -541,6 +782,7 @@
 
 [论文](https://arxiv.org/abs/2505.19623) · [官方数据](https://huggingface.co/datasets/SGJQovo/AgentRecBench) · [作者挑战与环境入口](https://tsinghua-fib-lab.github.io/AgentSocietyChallenge/pages/overview.html)
 
+
 <a id="surveys"></a>
 ## 综述与研究路线
 
@@ -553,10 +795,29 @@
 
 [论文](https://arxiv.org/abs/2607.04433)
 
+
 <a id="background"></a>
 ## 相关背景
 
 以下工作帮助理解物品生成与推荐目标对齐，单独计为背景，不自动归入核心推理方法。
+
+<a id="paper-hcg-rec"></a>
+### HCGRec：Learning from Unreachable Rewards: Hint-Conditioned Reinforcement Learning for Generative Recommendation
+
+**2026-08 · arXiv** · `背景` `生成式推荐` `RL` `前缀可达性`
+
+在训练时对难例提供最短目标前缀提示，分别对提示 token 和采样后缀分配学习信号。属于 SID 奖励学习背景，目标提示不能用于部署评测。
+
+[论文](https://arxiv.org/abs/2608.11980) · 官方代码：未核实
+
+<a id="paper-latte"></a>
+### Latte: Expressiveness Limits of Autoregressive Semantic ID Generation in Generative Recommendation
+
+**2026-05 · arXiv** · `背景` `语义ID` `解码结构`
+
+分析 SID 解码树与物品概率耦合，并以前置离散 latent token 条件化多棵树；另探索 token 与 SID 排列绑定。这里的 latent token 是离散路径变量，不是连续多步推理。
+
+[论文](https://arxiv.org/abs/2605.06331) · [官方代码](https://github.com/hyp1231/Latte)
 
 <a id="paper-onerec"></a>
 ### OneRec Technical Report
@@ -576,6 +837,15 @@
 
 [论文](https://arxiv.org/abs/2503.24289) · [官方代码](https://github.com/linjc16/Rec-R1)
 
+<a id="paper-setrec"></a>
+### SETRec：Order-agnostic Identifier for Large Language Model-based Generative Recommendation
+
+**2025-02 · arXiv** · `背景` `生成式推荐` `无序编码`
+
+以无序 token 集合表达物品并并行生成，减弱固定序列依赖；是比较 SID 顺序与潜在推理时的重要编码对照。
+
+[论文](https://arxiv.org/abs/2502.10833) · 官方代码：未核实
+
 <a id="paper-tiger"></a>
 ### TIGER: Recommender Systems with Generative Retrieval
 
@@ -584,6 +854,7 @@
 将物品表示为语义 ID，通过自回归生成完成推荐，是理解物品编码与生成式检索的基础入口。
 
 [论文](https://arxiv.org/abs/2305.05065) · 官方代码：未核实
+
 
 ## 下一步研究
 

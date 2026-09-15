@@ -2,7 +2,7 @@
 
 [返回首页](../README.md) · [前沿地图](frontier-map.md) · [证据卡片](frontier-reading.md) · [基准选型](benchmarks.md)
 
-**核实日期：2026-09-15。** 对照 28 个代表方法，重点是推理对象、学习信号和计算发生位置。各论文的数据、候选、骨干与预算不同，本表不构造跨协议 SOTA 排行榜。未核实的字段保留未知，不根据方法名补猜。
+**核实日期：2026-09-15。** 对照 32 个代表方法，重点是推理对象、学习信号和计算发生位置。各论文的数据、候选、骨干与预算不同，本表不构造跨协议 SOTA 排行榜。未核实的字段保留未知，不根据方法名补猜。
 
 ## 读表方法
 
@@ -83,3 +83,14 @@
 5. 把同名 Pass@K、pass^k 或不同任务的平均分当作同一指标。
 
 可复用的记录字段与控制实验见 [评测指南](evaluation.md) 和 [前沿研究地图](frontier-map.md)。
+
+## SID 与潜在推理的直接交叉（4）
+
+| 方法 | 计算或表示 | 监督与推理流程 | 必须区分的概念 | 核实范围 |
+| --- | --- | --- | --- | --- |
+| [S²GR](../README.md#paper-s2gr) | 每个 SID 前的潜在 thinking token | 码本层次语义对比监督、协同与均衡码本 | 中间语义对齐不是干预意义上的因果验证 | [v3](https://arxiv.org/html/2601.18664v3)：摘要、引言与方法描述 |
+| [LASAR](../README.md#paper-lasar) | 循环隐状态反馈、每样本深度 | SID grounding → CoT 锚点双向 KL → GRPO/REINFORCE | 循环前向、离线教师成本与线上 beam 成本分别计算 | [v2](https://arxiv.org/html/2605.10207v2)：引言、结论与相关工作 |
+| [PauseRec](../README.md#paper-pauserec) | 预置 pause token 的计算位置 | 先仅训 pause 嵌入，再用目标 SID 损失微调 | 固定 pause 位置不等同于逐步反馈前一隐状态 | [v2](https://arxiv.org/html/2606.14142v2)：§5、§6.3–6.4 |
+| [Latte](../README.md#paper-latte) | 离散 latent token 条件化多棵 SID 树 | 随机 latent 前缀训练，多路径聚合；另探索排列绑定 | 属于必要背景；离散路径变量不是连续推理步 | [v1](https://arxiv.org/html/2605.06331v1)：摘要、引言与多树/排列描述 |
+
+来源：[本次29篇补录与核读范围](../notes/latent-sid-search-2026-09-15.md)。
