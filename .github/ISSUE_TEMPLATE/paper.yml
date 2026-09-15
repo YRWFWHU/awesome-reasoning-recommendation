@@ -1,0 +1,52 @@
+name: 推荐论文或资源
+description: 提交推理增强推荐方向的论文、代码、模型或评测资源
+title: "[收录] "
+body:
+  - type: input
+    id: title
+    attributes:
+      label: 论文或资源名称
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: 一手来源链接
+      description: 优先论文摘要页、正式出版页或作者项目页。
+    validations:
+      required: true
+  - type: dropdown
+    id: category
+    attributes:
+      label: 建议主分类
+      options:
+        - 思维链与推理学习
+        - 强化学习与奖励设计
+        - 推理时扩展
+        - 推理蒸馏与效率
+        - 交互与智能体推荐
+        - 评测与基准
+        - 背景或边界待讨论
+    validations:
+      required: true
+  - type: textarea
+    id: reason
+    attributes:
+      label: 推理如何参与推荐决策
+      description: 简述任务、方法和收录理由；仅使用 LLM 或 RL 不足以说明相关性。
+    validations:
+      required: true
+  - type: textarea
+    id: resources
+    attributes:
+      label: 官方资源与核实依据
+      description: 可附代码、模型、数据，以及作者在哪个页面提供这些链接；未知可写未核实。
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: 提交确认
+      options:
+        - label: 已搜索标题和论文 ID，未发现重复条目。
+          required: true
+        - label: 已打开并阅读上述一手来源。
+          required: true

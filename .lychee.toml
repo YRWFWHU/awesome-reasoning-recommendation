@@ -1,0 +1,8 @@
+# 低并发访问学术站点；不将限流或服务器错误当作有效链接。
+max_concurrency = 2
+max_retries = 2
+timeout = 30
+retry_wait_time = 5
+include_fragments = "anchor-only"
+host_concurrency = 1
+host_request_interval = "1s"

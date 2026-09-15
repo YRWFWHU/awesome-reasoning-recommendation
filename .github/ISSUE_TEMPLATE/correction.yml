@@ -1,0 +1,22 @@
+name: 更正内容或链接
+description: 报告分类、摘要、日期、资源状态或链接问题
+title: "[更正] "
+body:
+  - type: input
+    id: location
+    attributes:
+      label: 对应条目或文件位置
+    validations:
+      required: true
+  - type: textarea
+    id: correction
+    attributes:
+      label: 问题与建议修改
+      description: 如有更新的论文版本或官方链接，请一并附上。
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: 证据
+      description: 可填写原文段落、链接或访问错误；临时超时请说明检查时间。
