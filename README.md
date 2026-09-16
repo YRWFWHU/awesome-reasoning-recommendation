@@ -6,7 +6,7 @@
 
 [入门路线](#start-here) · [论文清单](#papers) · [近期必读](#frontier) · [前沿地图](docs/frontier-map.md) · [方法对照](docs/method-matrix.md) · [证据卡片](docs/frontier-reading.md) · [基准选型](docs/benchmarks.md) · [参与贡献](CONTRIBUTING.md)
 
-**最近整理：2026-09-17** · 82 篇文献：63 篇核心方法、6 项基准、6 篇评测研究、1 篇综述、6 篇背景 · 17 篇精选卡片
+**最近整理：2026-09-17** · 84 篇文献：65 篇核心方法、6 项基准、6 篇评测研究、1 篇综述、6 篇背景 · 17 篇精选卡片
 
 ## 收录范围
 
@@ -74,11 +74,11 @@
 ## 论文清单
 
 - [思维链与推理学习](#cot)（7）
-- [潜在推理与偏好表示](#latent)（16）
+- [潜在推理与偏好表示](#latent)（17）
 - [强化学习与奖励设计](#rl)（9）
 - [推理时扩展与自适应预算](#tts)（12）
 - [推理蒸馏与效率](#distillation)（12）
-- [交互与智能体推荐](#agents)（7）
+- [交互与智能体推荐](#agents)（8）
 - [评测、基准与有效性证据](#benchmarks)（12）
 - [综述与研究路线](#surveys)（1）
 - [相关背景](#background)（6）
@@ -271,6 +271,15 @@
 在每个 SID 码生成前插入潜在思考，用对应码本层次的语义分布监督中间状态，同时引入协同行为与码本均衡训练。
 
 [论文](https://arxiv.org/abs/2601.18664) · 官方代码：未核实
+
+<a id="paper-onepiece"></a>
+### OnePiece: Bringing Context Engineering and Reasoning to Industrial Cascade Ranking System
+
+**2025-09 · arXiv** · `工业召回与排序` `潜在推理` `过程监督`
+
+将结构化偏好与场景上下文、分块潜在状态细化和基于用户反馈链的渐进多任务训练结合，应用于工业级召回与排序。属于潜在推理推荐，不将其等同于SID自回归生成。
+
+[论文](https://arxiv.org/abs/2509.18091) · 官方代码：未核实
 
 <a id="paper-latent-cross"></a>
 ### Latent Cross Reasoning：Bridging Search and Recommendation through Latent Cross Reasoning
@@ -667,6 +676,15 @@
 让用户画像、物品信息、行为统计和协同检索参与 Think–Act–Observation 决策循环；先以推荐反馈优化完整轨迹，再从排序错误挖掘难例进行双向偏好推理。实验采用 20 候选排序，不能直接推及全库召回。
 
 [论文](https://arxiv.org/abs/2603.21613) · 作者匿名代码入口当前返回 403，内容未核实（见 [来源记录](docs/sources.md#unavailable-resources)）
+
+<a id="paper-enf"></a>
+### ENF: When Top-ranked Recommendations Fail: Modeling Multi-Granular Negative Feedback for Explainable and Robust Video Recommendation
+
+**2025-11 · arXiv** · `视频推荐` `负反馈` `智能体` `RL`
+
+结合用户画像、视频理解与综合推理三个智能体，预测负反馈并解释原因，使用渐进S-GRPO训练；推理同时参与用户参与度预测，不只是结果后的解释。属于显式多模态推理近邻，不是连续潜空间推理。
+
+[论文](https://arxiv.org/abs/2511.18700) · 官方代码：未核实
 
 <a id="paper-agentdr"></a>
 ### AgentDR: Dynamic Recommendation with Implicit Item-Item Relations via LLM-based Agents
