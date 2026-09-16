@@ -6,7 +6,7 @@
 
 [入门路线](#start-here) · [论文清单](#papers) · [近期必读](#frontier) · [前沿地图](docs/frontier-map.md) · [方法对照](docs/method-matrix.md) · [证据卡片](docs/frontier-reading.md) · [基准选型](docs/benchmarks.md) · [参与贡献](CONTRIBUTING.md)
 
-**最近整理：2026-09-15** · 81 篇文献：62 篇核心方法、6 项基准、6 篇评测研究、1 篇综述、6 篇背景 · 17 篇精选卡片
+**最近整理：2026-09-17** · 82 篇文献：63 篇核心方法、6 项基准、6 篇评测研究、1 篇综述、6 篇背景 · 17 篇精选卡片
 
 ## 收录范围
 
@@ -68,7 +68,7 @@
 
 **深入使用：** [方法与证据矩阵](docs/method-matrix.md) · [12 篇前沿证据卡](docs/frontier-reading.md) · [5 篇基础阅读卡](docs/reading-notes.md) · [6 个基准选型表](docs/benchmarks.md)。
 
-检索截止为 2026-09-15；这是精选研究导航，覆盖范围与核实深度见 [检索记录](notes/frontier-search-2026-09-15.md)。
+总体检索截至 2026-09-15，2026-09-17 另核对潜在推理方向并补入 LARK；这是精选导航，见 [总体检索记录](notes/frontier-search-2026-09-15.md) 与 [潜在推理更新](notes/latent-reasoning-update-2026-09-17.md)。
 
 <a id="papers"></a>
 ## 论文清单
@@ -77,7 +77,7 @@
 - [潜在推理与偏好表示](#latent)（16）
 - [强化学习与奖励设计](#rl)（9）
 - [推理时扩展与自适应预算](#tts)（12）
-- [推理蒸馏与效率](#distillation)（11）
+- [推理蒸馏与效率](#distillation)（12）
 - [交互与智能体推荐](#agents)（7）
 - [评测、基准与有效性证据](#benchmarks)（12）
 - [综述与研究路线](#surveys)（1）
@@ -501,6 +501,15 @@
 
 <a id="distillation"></a>
 ## 推理蒸馏与效率
+
+<a id="paper-lark"></a>
+### LARK: Latent-Aligned Reasoning for Multimodal Recommendation
+
+**2026-09 · arXiv** · `多模态推荐` `潜在推理` `CoT` `离线物品表示`
+
+以视觉对齐和推理语义对齐缓解多步计算中的跨模态信息衰减；交替生成潜在状态与文本思维链，产出的物品表示可离线缓存供下游推荐使用。属于推理增强表示，不是在线 SID 自回归生成。
+
+[论文](https://arxiv.org/abs/2609.04645) · 官方代码：未核实
 
 <a id="paper-selfdr"></a>
 ### SelfDR: Self-Distillation from Reasoning for LLM-Based Recommendation
