@@ -74,3 +74,7 @@
 ## 2026-09-17 研究缺口检索回流
 
 另补OnePiece、ENF两篇既有相关工作，当前84篇（65核心、6基准、6评测、1综述、6背景），不是两篇刚发表的新论文。核实一手摘要与首次日期，不宣称全文复现；Expl-Debias留待核实。见[来源与范围记录](../notes/latent-open-questions-2026-09-17.md)。
+
+## 2026-09-17 方法选题补充
+
+新增EPIC、MoMoREC、MindRec三篇核心与MDGR、MADRec/MaskGR、TCA4Rec三篇必要背景，更新OneRec-Think正式ACL链接；总90篇（68核心、6基准、6评测、1综述、9背景）。见[逐篇证据与范围](../notes/method-ideation-sources-2026-09-17.md)。

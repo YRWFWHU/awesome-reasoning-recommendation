@@ -6,7 +6,7 @@
 
 [入门路线](#start-here) · [论文清单](#papers) · [近期必读](#frontier) · [前沿地图](docs/frontier-map.md) · [方法对照](docs/method-matrix.md) · [证据卡片](docs/frontier-reading.md) · [基准选型](docs/benchmarks.md) · [参与贡献](CONTRIBUTING.md)
 
-**最近整理：2026-09-17** · 84 篇文献：65 篇核心方法、6 项基准、6 篇评测研究、1 篇综述、6 篇背景 · 17 篇精选卡片
+**最近整理：2026-09-17** · 90 篇文献：68 篇核心方法、6 项基准、6 篇评测研究、1 篇综述、9 篇背景 · 17 篇精选卡片
 
 ## 收录范围
 
@@ -76,12 +76,12 @@
 - [思维链与推理学习](#cot)（7）
 - [潜在推理与偏好表示](#latent)（17）
 - [强化学习与奖励设计](#rl)（9）
-- [推理时扩展与自适应预算](#tts)（12）
-- [推理蒸馏与效率](#distillation)（12）
+- [推理时扩展与自适应预算](#tts)（14）
+- [推理蒸馏与效率](#distillation)（13）
 - [交互与智能体推荐](#agents)（8）
 - [评测、基准与有效性证据](#benchmarks)（12）
 - [综述与研究路线](#surveys)（1）
-- [相关背景](#background)（6）
+- [相关背景](#background)（9）
 
 <a id="cot"></a>
 ## 思维链与推理学习
@@ -111,7 +111,7 @@
 
 先对齐物品与文本语义，再学习推荐推理轨迹并用推荐奖励优化，使文本推理参与后续物品生成。
 
-[论文](https://arxiv.org/abs/2510.11639) · [官方代码](https://github.com/wangshy31/OneRec-Think) · [阅读卡片](docs/reading-notes.md#onerec-think)
+[论文](https://arxiv.org/abs/2510.11639) · [ACL 2026 正式版](https://aclanthology.org/2026.acl-long.123/) · [官方代码](https://github.com/wangshy31/OneRec-Think) · [阅读卡片](docs/reading-notes.md#onerec-think)
 
 <a id="paper-gream"></a>
 ### GREAM: Generative Reasoning Recommendation via LLMs
@@ -399,6 +399,15 @@
 
 分别标注潜在状态迭代、候选验证和结构化路径搜索；训练数据或训练 FLOPs 扩展不自动归入 TTS。
 
+<a id="paper-epic"></a>
+### EPIC: Explicit Posterior Item Conditioning for Semantic ID Diffusion Recommendation
+
+**2026-09 · arXiv** · `语义ID` `结构化推断` `扩散`
+
+在 SID 去噪过程中，利用近期交互形成可行候选物品的个性化后验，再将物品概率边缘化回未确定的编码位置，影响后续选择。收录为物品假设参与中间决策的结构化推断，不将其等同于连续潜在思维链。
+
+[论文](https://arxiv.org/abs/2609.03522) · 官方代码：未核实
+
 <a id="paper-rgd"></a>
 ### RGD：Reward Guided Decoding for Generative Recommendation
 
@@ -479,6 +488,15 @@
 以逐渐细化的物品聚类原型监督中间状态，并综合预测熵、相邻预测一致性和隐状态变化学习何时停止推理。
 
 [论文](https://arxiv.org/abs/2512.14036) · 官方代码：未核实
+
+<a id="paper-mindrec"></a>
+### MindRec: A Diffusion-driven Coarse-to-Fine Paradigm for Generative Recommendation
+
+**2025-11 · arXiv** · `生成式推荐` `结构化推断` `掩码扩散` `搜索`
+
+先生成层级类别，再按置信度补全 SID，并以扩散束搜索保留多条候选路径。结构化决策与搜索直接影响推荐结果；不将这种离散生成过程等同于连续潜空间推理。
+
+[论文](https://arxiv.org/abs/2511.12597) · [官方代码](https://github.com/Mr-Peach0301/MindRec)
 
 <a id="paper-reg4rec"></a>
 ### REG4Rec: Reasoning-Enhanced Generative Model for Large-Scale Recommendation Systems
@@ -573,6 +591,15 @@
 在离散化前用思维链提取兴趣、融合图文信息，再以 SID、文本与视觉描述的多任务训练对齐。推理主要参与离线语义构建，不等同预测时增加思考步数。
 
 [论文](https://arxiv.org/abs/2605.05249) · 官方代码：未核实
+
+<a id="paper-momorec"></a>
+### MoMoREC: A Multi-agent Motivation Generation Framework for Residual Semantic ID-Aware Recommendation
+
+**2026-03 · AAAI 2026 正式出版** · `序列推荐` `动机推理` `语义ID` `训练期推理`
+
+先用多智能体分析购物动机，再将对应连续表示压缩为残差语义 ID，供下游序列推荐器使用。推理发生在表示构建阶段，不是在线连续状态迭代。
+
+[论文](https://ojs.aaai.org/index.php/AAAI/article/view/38623) · 官方代码：未核实
 
 <a id="paper-isrf"></a>
 ### ISRF：Iterative Semantic Reasoning from Individual to Group Interests for Generative Recommendation with LLMs
@@ -845,6 +872,33 @@
 分析 SID 解码树与物品概率耦合，并以前置离散 latent token 条件化多棵树；另探索 token 与 SID 排列绑定。这里的 latent token 是离散路径变量，不是连续多步推理。
 
 [论文](https://arxiv.org/abs/2605.06331) · [官方代码](https://github.com/hyp1231/Latte)
+
+<a id="paper-mdgr"></a>
+### MDGR: Masked Diffusion Generative Recommendation
+
+**2026-01 · arXiv** · `背景` `语义ID` `掩码扩散` `并行解码`
+
+结合并行码本、训练期掩码调度和两阶段并行解码，逐步补全物品编码。用于区分 SID 去噪与连续潜在推理的贡献，不因存在多步生成就视为推理方法。
+
+[论文](https://arxiv.org/abs/2601.19501) · 官方代码：未核实
+
+<a id="paper-tca4rec"></a>
+### TCA4Rec: Token-level Collaborative Alignment for LLM-based Generative Recommendation
+
+**2026-01 · arXiv** · `背景` `协同对齐` `软标签`
+
+将协同过滤的物品分数转为生成 token 的软监督分布；是判断新增中间监督是否超出已有物品到 token 对齐的重要对照。原文任务包含物品标题生成，不将其限定为 SID 方法。
+
+[论文](https://arxiv.org/abs/2601.18457) · [官方代码](https://github.com/critical88/TCA4Rec)
+
+<a id="paper-maskgr"></a>
+### MADRec / MaskGR: Masked Diffusion for Generative Recommendation
+
+**2025-11 · arXiv** · `背景` `语义ID` `掩码扩散`
+
+以随机掩码训练建模 SID 序列，支持双向条件和多位置并行补全，是比较联合编码推断的必要背景。v1 方法名为 MADRec，作者仓库当前使用 MaskGR 名称，合并维护为同一条。
+
+[论文](https://arxiv.org/abs/2511.23021) · [官方代码](https://github.com/snap-research/MaskGR)
 
 <a id="paper-onerec"></a>
 ### OneRec Technical Report
