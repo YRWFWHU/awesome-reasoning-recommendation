@@ -78,3 +78,7 @@
 ## 2026-09-17 方法选题补充
 
 新增EPIC、MoMoREC、MindRec三篇核心与MDGR、MADRec/MaskGR、TCA4Rec三篇必要背景，更新OneRec-Think正式ACL链接；总90篇（68核心、6基准、6评测、1综述、9背景）。见[逐篇证据与范围](../notes/method-ideation-sources-2026-09-17.md)。
+
+## 2026-09-19 HiLaR奖励口径核对
+
+细化已有HiLaR条目：平均token对数概率、裁剪与层级权重、协同偏好奖励，以及物品标题生成和用户偏好量化的区别。新增0篇，总90篇不变。见[正文核实记录](../notes/hilar-reward-verification-2026-09-19.md)。
