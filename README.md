@@ -6,7 +6,7 @@
 
 [入门路线](#start-here) · [论文清单](#papers) · [近期必读](#frontier) · [前沿地图](docs/frontier-map.md) · [方法对照](docs/method-matrix.md) · [证据卡片](docs/frontier-reading.md) · [基准选型](docs/benchmarks.md) · [参与贡献](CONTRIBUTING.md)
 
-**最近整理：2026-09-21** · 100 篇文献：76 篇核心方法、6 项基准、7 篇评测研究、2 篇综述、9 篇背景 · 17 篇精选卡片
+**最近整理：2026-09-21** · 103 篇文献：78 篇核心方法、6 项基准、8 篇评测研究、2 篇综述、9 篇背景 · 17 篇精选卡片
 
 ## 收录范围
 
@@ -71,23 +71,32 @@
 
 **深入使用：** [方法与证据矩阵](docs/method-matrix.md) · [12 篇前沿证据卡](docs/frontier-reading.md) · [5 篇基础阅读卡](docs/reading-notes.md) · [6 个基准选型表](docs/benchmarks.md)。
 
-本轮检索截止与重叠窗口见 [2026-09-21 周检记录](notes/weekly-search-2026-09-21.md)；历史记录保留在 [总体检索](notes/frontier-search-2026-09-15.md) 与 [潜在推理更新](notes/latent-reasoning-update-2026-09-17.md)。
+本轮检索截止与重叠窗口见 [2026-09-21 周检记录](notes/weekly-search-2026-09-21.md)；本次配置核读与补录见 [综述证据记录](notes/survey-evidence-2026-09-21.md)。历史记录保留在 [总体检索](notes/frontier-search-2026-09-15.md) 与 [潜在推理更新](notes/latent-reasoning-update-2026-09-17.md)。
 
 <a id="papers"></a>
 ## 论文清单
 
-- [思维链与推理学习](#cot)（7）
+- [思维链与推理学习](#cot)（8）
 - [潜在推理与偏好表示](#latent)（19）
 - [强化学习与奖励设计](#rl)（9）
 - [推理时扩展与自适应预算](#tts)（15）
 - [推理蒸馏与效率](#distillation)（16）
-- [交互与智能体推荐](#agents)（10）
-- [评测、基准与有效性证据](#benchmarks)（13）
+- [交互与智能体推荐](#agents)（11）
+- [评测、基准与有效性证据](#benchmarks)（14）
 - [综述与研究路线](#surveys)（2）
 - [相关背景](#background)（9）
 
 <a id="cot"></a>
 ## 思维链与推理学习
+
+<a id="paper-cogrec-routing"></a>
+### CogRec: Structure-Cognitive Fast-and-Slow Reasoning for Generative Recommendation
+
+**2026-07 · arXiv** · `CoT` `SID` `结构化路由` `序列推荐`
+
+在 SID 层级及语义邻接结构上学习 Match、Lateral Jump、Explore 路由，先产生结构化轨迹再生成 SID。直接预测和路由模式涉及输入信息及采样预算差异；作者报告的收益随数据域变化，不将其解释为等预算的普遍提升。
+
+[论文](https://arxiv.org/abs/2607.24402) · [官方代码](https://github.com/caskcsg/CogRec)
 
 <a id="paper-onereason"></a>
 ### OneReason Technical Report
@@ -189,7 +198,7 @@
 
 **2026-07 · arXiv** · `层次偏好` `过程奖励`
 
-按时间层次将偏好监督对齐到连续推理状态，以目标标题的平均 token 对数概率增益经裁剪、层级加权构造过程项；总奖励还包含冻结协同模型的偏好评分及层级对齐。输出为受目录约束的物品标题，不能将其用户偏好量化直接等同于物品 SID 解码。`潜在推理`
+按时间层次将偏好监督对齐到连续推理状态，以目标标题的平均 token 对数概率增益经裁剪、层级加权构造过程项；总奖励还包含冻结协同模型的偏好评分及层级对齐；逐层项汇总后计算轨迹级优势，不能直接视为逐层独立信用分配。输出为受目录约束的物品标题，不能将其用户偏好量化直接等同于物品 SID 解码。`潜在推理`
 
 [论文](https://arxiv.org/abs/2607.27760) · [官方仓库（目前仅占位）](https://github.com/hupeiyu21/HiLaR)
 
@@ -207,7 +216,7 @@
 
 **2026-06 · arXiv** · `商品检索` `潜在推理` `SID`
 
-在生成商品 SID 前执行类别引导的连续意图推理，结合多意图训练与查询相关前缀树。实验任务是电商搜索，不能直接视为序列推荐结论。
+在生成商品 SID 前执行类别引导的连续意图推理，以多正类别原型的对比目标训练多意图表示，并使用查询相关前缀树；这不等于对单次点击的过程奖励纠偏。实验任务是电商搜索，不能直接视为序列推荐结论。
 
 [论文](https://arxiv.org/abs/2606.07075) · 官方代码：未核实
 
@@ -774,6 +783,15 @@
 
 [论文](https://arxiv.org/abs/2603.21613) · 作者匿名代码入口当前返回 403，内容未核实（见 [来源记录](docs/sources.md#unavailable-resources)）
 
+<a id="paper-cogrec-soar"></a>
+### CogRec: A Cognitive Recommender Agent Fusing Large Language Models and Soar for Explainable Recommendation
+
+**2025-12 · arXiv** · `智能体` `规则推理` `Soar` `推荐决策`
+
+将 LLM 的语义理解与 Soar 的工作记忆、规则决策和学习结合，在决策受阻时调用 LLM 并把解决方案转为规则。推理参与候选筛选与选择，不只在结果后生成解释；与 2026 年的 SID 路由 CogRec 是不同论文。
+
+[论文](https://arxiv.org/abs/2512.24113) · 官方代码：未核实
+
 <a id="paper-enf"></a>
 ### ENF: When Top-ranked Recommendations Fail: Modeling Multi-Granular Negative Feedback for Explainable and Robust Video Recommendation
 
@@ -851,6 +869,15 @@
 
 [论文](https://arxiv.org/abs/2608.23154) · 官方代码：未核实 · [证据卡片](docs/frontier-reading.md#disconnect)
 
+<a id="paper-restoring-collaborative"></a>
+### Restoring Collaborative Signals in Semantic-ID Generative Recommendation via Personalized Natural Language
+
+**2026-07 · arXiv** · `评测研究` `SID` `协同信号` `文本接口`
+
+在冻结 OneRec 与固定候选池上，对照原生 CoT、普通文本提示和协同因子引导的个性化语言接口，并分析 SID 前缀重排。证据来自 RecIF 与两个模型规模；目标隔离子集、原生 CoT 诊断和主表配置须分开阅读，不能泛化为所有推荐推理无效。
+
+[论文](https://arxiv.org/abs/2607.27682) · 官方代码：未核实
+
 <a id="paper-cold-sid"></a>
 ### Temporal Cold SID：Can Generative Recommendation Reach Cold Items? A Temporal Perspective on Semantic-ID Generation
 
@@ -876,7 +903,7 @@
 
 区分命中 SID 与命中具体物品，分析编码碰撞引起的计分偏差，并提供物品级修正和消除碰撞的后处理。当前标题与初版不同，合并为一条。
 
-[论文](https://arxiv.org/abs/2605.25330) · 官方代码：未核实
+[论文](https://arxiv.org/abs/2605.25330) · [官方代码](https://github.com/Nishikata97/CollisionGenRec)
 
 <a id="paper-conv-finre"></a>
 ### Conv-FinRe: A Conversational and Longitudinal Benchmark for Utility-Grounded Financial Recommendation

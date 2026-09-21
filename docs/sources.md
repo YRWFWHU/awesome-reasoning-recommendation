@@ -90,3 +90,7 @@
 ## 2026-09-21 综述准备的回溯补录
 
 新增CARE、Diffusion-GR2两篇核心方法和Towards Reasoning-Aware Recommender Systems一篇直接相关综述，合计100篇（76核心、6基准、7评测、2综述、9背景）。这是既有遗漏的补录，不全是本周新发表论文；来源、固定版本、首次日期和TechRxiv访问限制见[回流记录](../notes/survey-backfill-2026-09-21.md)。未发表的综述提纲与内部评审保留在本地研究目录。
+
+## 2026-09-21 综述配置核读与定向回流
+
+回溯补录 CogRec（SID 结构路由）、CogRec（Soar 智能体）及 Restoring Collaborative Signals，共3篇；同名 CogRec 按不同标题与 arXiv ID 保留两条。总计 **103篇：78核心、6基准、8评测、2综述、9背景**，17篇精选卡片不变。核实 Faithful SID Evaluation 的官方 CollisionGenRec 资源；澄清 HiLaR 的轨迹级优势及 CaLIR 的多正类别目标。见[固定版本、范围与证据限定](../notes/survey-evidence-2026-09-21.md)。本轮为定向配置核读与历史遗漏补录，不替代周检截止记录；未运行论文实验。
