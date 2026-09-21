@@ -2,7 +2,7 @@
 
 [返回首页](../README.md) · [前沿地图](frontier-map.md) · [证据卡片](frontier-reading.md) · [基准选型](benchmarks.md)
 
-**核实日期：2026-09-15。** 对照 32 个代表方法，重点是推理对象、学习信号和计算发生位置。各论文的数据、候选、骨干与预算不同，本表不构造跨协议 SOTA 排行榜。未核实的字段保留未知，不根据方法名补猜。
+**核实日期：原表2026-09-15；本周补充2026-09-21。** 对照 39 个代表方法，重点是推理对象、学习信号和计算发生位置。各论文的数据、候选、骨干与预算不同，本表不构造跨协议 SOTA 排行榜。未核实的字段保留未知，不根据方法名补猜。
 
 ## 读表方法
 
@@ -94,3 +94,17 @@
 | [Latte](../README.md#paper-latte) | 离散 latent token 条件化多棵 SID 树 | 随机 latent 前缀训练，多路径聚合；另探索排列绑定 | 属于必要背景；离散路径变量不是连续推理步 | [v1](https://arxiv.org/html/2605.06331v1)：摘要、引言与多树/排列描述 |
 
 来源：[本次29篇补录与核读范围](../notes/latent-sid-search-2026-09-15.md)。
+
+## 2026-09-21 补充：计算位置与证据边界（7）
+
+| 方法 | 推理影响决策的位置 | 训练与预测的区别 | 固定版本证据 |
+| --- | --- | --- | --- |
+| [Re2A](../README.md#paper-re2a) | 场景偏好状态引导回复和物品选择 | GRPO整轨迹rubric评分；再做偏好条件DPO | [v1 §3](https://arxiv.org/html/2609.18249v1)；代码入口404 |
+| [NarraLite](../README.md#paper-narralite) | 潜在叙事token引导SID续集生成 | 训练用目标语义对齐；预测无教师，潜在token并行 | [v1 §4–6](https://arxiv.org/html/2609.16070v1)；非个性化任务，消融并非逐指标一致下降 |
+| [P³Rec](../README.md#paper-p3rec) | 先验/后验偏好知识进入检索表示 | 后验只训练使用；预测仍编码先验偏好 | [v3 §3.5.2](https://arxiv.org/html/2609.13993v3)；离线LLM成本另计 |
+| [Trade-Up蒸馏](../README.md#paper-trade-up) | 理由监督商品对关系分类 | 在线无文字生成；按商品类型进行有标签适配 | [v1 §2–4](https://arxiv.org/html/2609.05363v1)；不等同逐请求无监督TTT |
+| [LIGE-GR](../README.md#paper-lige-gr) | 未来价值引导列表前缀搜索 | 闭式未来估计，非另训价值网络；b=1/6需区分 | [v1 §3.3、§5.3](https://arxiv.org/html/2609.18148v1)；b=6端到端时延未给出 |
+| [AtomRec](../README.md#paper-atomrec) | 语义链接、多跳证据合成后排序 | 记忆维护及在线证据合成都有成本 | [v1 §2.4–2.6](https://arxiv.org/html/2609.04882v1)；默认10候选，不证明路径忠实性 |
+| [TGR](../README.md#paper-tgr) | 离线完整SID reason tokens注入生成器 | 首级SID深度监督；K=0离线导出；无请求rollout | [v1 §5.2.2、§5.5](https://arxiv.org/html/2609.00986v1)；表16不含GMR |
+
+除已另述的资源外，以上新增方法官方实现未核实。未记录的训练预算、候选总量或绝对成本均为未知。详见[周检来源与限定](../notes/weekly-search-2026-09-21.md)。

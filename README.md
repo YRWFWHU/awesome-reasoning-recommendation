@@ -6,7 +6,7 @@
 
 [入门路线](#start-here) · [论文清单](#papers) · [近期必读](#frontier) · [前沿地图](docs/frontier-map.md) · [方法对照](docs/method-matrix.md) · [证据卡片](docs/frontier-reading.md) · [基准选型](docs/benchmarks.md) · [参与贡献](CONTRIBUTING.md)
 
-**最近整理：2026-09-17** · 90 篇文献：68 篇核心方法、6 项基准、6 篇评测研究、1 篇综述、9 篇背景 · 17 篇精选卡片
+**最近整理：2026-09-21** · 97 篇文献：74 篇核心方法、6 项基准、7 篇评测研究、1 篇综述、9 篇背景 · 17 篇精选卡片
 
 ## 收录范围
 
@@ -54,12 +54,15 @@
 <a id="frontier"></a>
 ## 前沿阅读导航
 
-前沿扩充后，本次另补 29 篇 SID 与推理交叉及必要对照文献，连接编码结构、逐步潜在推理和路径搜索。以下按研究问题选读；完整的控制实验建议见 [8 个研究方向](docs/frontier-map.md)。
+本页连接编码结构、逐步潜在推理、路径搜索和推理蒸馏。以下按研究问题选读；完整的控制实验建议见 [8 个研究方向](docs/frontier-map.md)。
 
 | 近期入口 | 为什么读 | 证据边界 |
 | --- | --- | --- |
+| [NarraLite](#paper-narralite)、[P³Rec](#paper-p3rec) · 2026-09 | 潜在未来语义与先验/后验偏好监督 | 非个性化续集和个性化推荐须分开比较 |
+| [LIGE-GR · 2026-09](#paper-lige-gr) | 未来价值引导列表搜索 | 更宽 beam 的收益与价值目标变化需隔离 |
 | [SelfDR · 2026-09](#paper-selfdr) | 用推理自蒸馏支持直接预测 | 需计入教师与训练成本 |
 | [RPCBench · 2026-09](#paper-rpcbench) | 推荐前先诊断错误前提 | 裁判评分和程序化验证不同 |
+| [UPR 画像干预 · 2026-09](#paper-transparent-upr) | 检查偏好表示的变化是否改变排序 | 局限于所测评分回归模型与候选协议 |
 | [Disconnect · 2026-08](#paper-disconnect) | 检查轨迹质量与决策效果是否一致 | 单基座、三个领域的控制实验 |
 | [rEDMRec · 2026-08](#paper-redmrec) | 推理知识进入可编辑记忆 | 冻结学生，20 候选排序 |
 | [CRS 协议研究 · 2026-08](#paper-crs-protocol) | 候选、计分和解码会改变模型比较 | 未单独隔离 CoT 贡献 |
@@ -68,18 +71,18 @@
 
 **深入使用：** [方法与证据矩阵](docs/method-matrix.md) · [12 篇前沿证据卡](docs/frontier-reading.md) · [5 篇基础阅读卡](docs/reading-notes.md) · [6 个基准选型表](docs/benchmarks.md)。
 
-总体检索截至 2026-09-15，2026-09-17 另核对潜在推理方向并补入 LARK；这是精选导航，见 [总体检索记录](notes/frontier-search-2026-09-15.md) 与 [潜在推理更新](notes/latent-reasoning-update-2026-09-17.md)。
+本轮检索截止与重叠窗口见 [2026-09-21 周检记录](notes/weekly-search-2026-09-21.md)；历史记录保留在 [总体检索](notes/frontier-search-2026-09-15.md) 与 [潜在推理更新](notes/latent-reasoning-update-2026-09-17.md)。
 
 <a id="papers"></a>
 ## 论文清单
 
 - [思维链与推理学习](#cot)（7）
-- [潜在推理与偏好表示](#latent)（17）
+- [潜在推理与偏好表示](#latent)（18）
 - [强化学习与奖励设计](#rl)（9）
-- [推理时扩展与自适应预算](#tts)（14）
-- [推理蒸馏与效率](#distillation)（13）
-- [交互与智能体推荐](#agents)（8）
-- [评测、基准与有效性证据](#benchmarks)（12）
+- [推理时扩展与自适应预算](#tts)（15）
+- [推理蒸馏与效率](#distillation)（15）
+- [交互与智能体推荐](#agents)（10）
+- [评测、基准与有效性证据](#benchmarks)（13）
 - [综述与研究路线](#surveys)（1）
 - [相关背景](#background)（9）
 
@@ -149,11 +152,19 @@
 
 [论文](https://arxiv.org/abs/2408.06276) · [官方代码](https://github.com/jieyong99/EXP3RT)
 
-
 <a id="latent"></a>
 ## 潜在推理与偏好表示
 
 连续状态如何初始化、分解和接受监督是本类的主线；预算控制另见 [推理时扩展](#tts)，轨迹压缩另见 [推理蒸馏](#distillation)。
+
+<a id="paper-narralite"></a>
+### NarraLite: Efficient Multimodal Generative Recommendation with Latent Narrative Reasoning
+
+**2026-09 · arXiv** · `多模态` `潜在推理` `语义ID` `叙事续集预测`
+
+压缩视觉上下文，并路由连续潜在 token，以训练期的未来语义对齐引导续集 SID 生成。任务是用户无关的短剧剧情延续，不是个性化偏好预测；预测时潜在 token 并行处理，不生成文字思维链。
+
+[论文](https://arxiv.org/abs/2609.16070) · 官方代码：未核实
 
 <a id="paper-recgpt-v3"></a>
 ### RecGPT-V3：RecGPT-V3 Technical Report
@@ -308,7 +319,6 @@
 
 [论文](https://arxiv.org/abs/2505.19092) · [官方代码](https://github.com/xuwenxinedu/R3)
 
-
 <a id="rl"></a>
 ## 强化学习与奖励设计
 
@@ -393,11 +403,19 @@
 
 [论文](https://arxiv.org/abs/2505.16994) · [官方代码与模型入口](https://github.com/YRYangang/RRec)
 
-
 <a id="tts"></a>
 ## 推理时扩展与自适应预算
 
 分别标注潜在状态迭代、候选验证和结构化路径搜索；训练数据或训练 FLOPs 扩展不自动归入 TTS。
+
+<a id="paper-lige-gr"></a>
+### LIGE-GR: A Smooth Leap from Ranking to Generative Recommendation in the LLM Era
+
+**2026-09 · arXiv** · `列表推荐` `未来价值` `搜索` `工业推荐`
+
+把列表前缀视为决策状态，通过继续观看概率和未来价值估计引导 Palette 束搜索，显式考虑当前选择对后续列表的影响。属于结构化决策搜索；其闭式未来价值估计不等同另训价值网络或文字 CoT。
+
+[论文](https://arxiv.org/abs/2609.18148) · 官方代码：未核实
 
 <a id="paper-epic"></a>
 ### EPIC: Explicit Posterior Item Conditioning for Semantic ID Diffusion Recommendation
@@ -525,9 +543,26 @@
 
 [论文](https://arxiv.org/abs/2503.22675) · [官方代码](https://github.com/TangJiakai/ReaRec)
 
-
 <a id="distillation"></a>
 ## 推理蒸馏与效率
+
+<a id="paper-p3rec"></a>
+### P³Rec: Distilling Prior–Posterior Preference Reasoning for LLM-based Recommendation
+
+**2026-09 · arXiv** · `偏好推理` `蒸馏` `训练期推理`
+
+把历史驱动的先验偏好和目标条件的后验偏好蒸馏到行为表示，再按兴趣熵校准检索方向。目标条件后验仅用于训练；预测仍需编码先验偏好，离线偏好生成与更新成本应单列。
+
+[论文](https://arxiv.org/abs/2609.13993) · 官方代码：未核实
+
+<a id="paper-trade-up"></a>
+### Distill Globally, Adapt Locally: Reasoning Distillation and Product-Type Test-Time Training for Scalable Trade-Up Recommendation
+
+**2026-09 · arXiv** · `商品关系` `理由蒸馏` `有监督适配`
+
+把教师对商品升级替代关系的标签和理由蒸馏到轻量商品对分类器，再用每类带标签示例适配。在线只用预计算向量；任务是商品关系识别，PT-TTT 是按类型摊销的有监督适配。
+
+[论文](https://arxiv.org/abs/2609.05363) · 官方代码：未核实
 
 <a id="paper-lark"></a>
 ### LARK: Latent-Aligned Reasoning for Multimodal Recommendation
@@ -552,7 +587,7 @@
 
 **2026-09 · arXiv** · `工业推荐` `训练期推理` `语义ID`
 
-其中 TGR-Reason 将潜在推理训练得到的信息离线导出为 reason tokens，注入线上生成器；请求路径不运行推理 rollout。报告还涵盖排序、物品与列表生成。
+其中 TGR-Reason 以目标首级 SID 监督训练期潜在状态，关闭 rollout（K=0）后离线导出完整 SID reason tokens，注入线上生成器。群体记忆检索是扩展设计，不属于正文表16的部署评测；训练、离线刷新和请求成本须分别核算。
 
 [论文](https://arxiv.org/abs/2609.00986) · 官方代码：未核实
 
@@ -646,9 +681,26 @@
 
 [论文](https://arxiv.org/abs/2403.04260) · 官方代码：未核实
 
-
 <a id="agents"></a>
 ## 交互与智能体推荐
+
+<a id="paper-re2a"></a>
+### Re2A: Situated Conversational Recommendation via Rubric-based Preference Reasoning and Alignment
+
+**2026-09 · arXiv** · `对话推荐` `多模态` `GRPO` `偏好对齐`
+
+根据对话和共享视觉场景推断结构化偏好状态，用动态 rubric 奖励训练推理，再通过偏好条件 DPO 对齐回复与场景。模型裁判评分针对整条 thought/state，不等同逐推理步可验证奖励。
+
+[论文](https://arxiv.org/abs/2609.18249) · 官方代码：未核实
+
+<a id="paper-atomrec"></a>
+### AtomRec: Evolving Atomic Memory for Agentic Recommendation
+
+**2026-09 · arXiv** · `候选排序` `记忆` `证据路径` `多跳检索`
+
+将用户与物品历史组织成可更新的原子记忆，推断语义关系并检索多跳证据路径，再综合证据排序候选；记忆构造、更新和在线证据合成均需计入成本。
+
+[论文](https://arxiv.org/abs/2609.04882) · 官方代码：未核实
 
 <a id="paper-reasonrec"></a>
 ### ReasonRec: A Reasoning-Augmented Multimodal Agent for Unified Recommendation
@@ -722,11 +774,19 @@
 
 [论文](https://arxiv.org/abs/2510.05598) · [阅读卡片](docs/reading-notes.md#agentdr) · 官方代码：未核实
 
-
 <a id="benchmarks"></a>
 ## 评测、基准与有效性证据
 
-包含 6 项评测资源与 3 篇有效性/协议研究。任务与指标不能直接合成统一排名，详见 [基准选型](docs/benchmarks.md)。
+包含 6 项评测资源与 7 篇有效性/协议研究。任务与指标不能直接合成统一排名，详见 [基准选型](docs/benchmarks.md)。
+
+<a id="paper-transparent-upr"></a>
+### Reproducing Transparent and Scrutable Recommendations: Exploring Open-Weight Models via Natural-Language User Profiles
+
+**2026-09 · arXiv** · `评测研究` `画像干预` `偏好证据` `协议分析`
+
+作者复现自然语言画像推荐，并以反事实画像和激活干预检查偏好证据是否影响排序；所测评分回归模型的表示和评分偏置会变，但未检测到显著类型选择性排序变化。结论受训练目标与候选协议限制，不能外推为 CoT 无效。
+
+[论文](https://arxiv.org/abs/2609.19831) · [官方代码](https://github.com/nmamie/transparent_user_profiles)
 
 <a id="paper-rpcbench"></a>
 ### RPCBench: A Benchmark for Proactive Premise Critique in LLM-based Recommendation
@@ -836,7 +896,6 @@
 
 [论文](https://arxiv.org/abs/2505.19623) · [官方数据](https://huggingface.co/datasets/SGJQovo/AgentRecBench) · [作者挑战与环境入口](https://tsinghua-fib-lab.github.io/AgentSocietyChallenge/pages/overview.html)
 
-
 <a id="surveys"></a>
 ## 综述与研究路线
 
@@ -848,7 +907,6 @@
 从智能体辅助推荐、作为推荐器、作为用户模拟器等角色梳理自主信息获取，讨论轨迹评测和模拟器校准。作为领域导航，单列于新方法和基准之外。
 
 [论文](https://arxiv.org/abs/2607.04433)
-
 
 <a id="background"></a>
 ## 相关背景
@@ -935,7 +993,6 @@
 将物品表示为语义 ID，通过自回归生成完成推荐，是理解物品编码与生成式检索的基础入口。
 
 [论文](https://arxiv.org/abs/2305.05065) · 官方代码：未核实
-
 
 ## 下一步研究
 
