@@ -94,3 +94,7 @@
 ## 2026-09-21 综述配置核读与定向回流
 
 回溯补录 CogRec（SID 结构路由）、CogRec（Soar 智能体）及 Restoring Collaborative Signals，共3篇；同名 CogRec 按不同标题与 arXiv ID 保留两条。总计 **103篇：78核心、6基准、8评测、2综述、9背景**，17篇精选卡片不变。核实 Faithful SID Evaluation 的官方 CollisionGenRec 资源；澄清 HiLaR 的轨迹级优势及 CaLIR 的多正类别目标。见[固定版本、范围与证据限定](../notes/survey-evidence-2026-09-21.md)。本轮为定向配置核读与历史遗漏补录，不替代周检截止记录；未运行论文实验。
+
+## 2026-09-21 全稿补证的文献回流
+
+新增 Flower（2025年既有遗漏），总104篇：79核心、6基准、8评测、2综述、9背景。核实SIGIR 2025正式DOI及作者实现；纠正CogRec共享SID trie来源，并明确TGR默认DRI的缓存条件不硬限制束搜索空间。RGD与CaLIR保留为已有的多目标/多正监督先例；DualGR为范围外近邻。见[固定来源与边界](../notes/survey-followup-2026-09-21.md)。本轮为定向补证，未改变周检截止时间，未运行论文实验。

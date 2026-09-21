@@ -6,7 +6,7 @@
 
 [入门路线](#start-here) · [论文清单](#papers) · [近期必读](#frontier) · [前沿地图](docs/frontier-map.md) · [方法对照](docs/method-matrix.md) · [证据卡片](docs/frontier-reading.md) · [基准选型](docs/benchmarks.md) · [参与贡献](CONTRIBUTING.md)
 
-**最近整理：2026-09-21** · 103 篇文献：78 篇核心方法、6 项基准、8 篇评测研究、2 篇综述、9 篇背景 · 17 篇精选卡片
+**最近整理：2026-09-21** · 104 篇文献：79 篇核心方法、6 项基准、8 篇评测研究、2 篇综述、9 篇背景 · 17 篇精选卡片
 
 ## 收录范围
 
@@ -71,14 +71,14 @@
 
 **深入使用：** [方法与证据矩阵](docs/method-matrix.md) · [12 篇前沿证据卡](docs/frontier-reading.md) · [5 篇基础阅读卡](docs/reading-notes.md) · [6 个基准选型表](docs/benchmarks.md)。
 
-本轮检索截止与重叠窗口见 [2026-09-21 周检记录](notes/weekly-search-2026-09-21.md)；本次配置核读与补录见 [综述证据记录](notes/survey-evidence-2026-09-21.md)。历史记录保留在 [总体检索](notes/frontier-search-2026-09-15.md) 与 [潜在推理更新](notes/latent-reasoning-update-2026-09-17.md)。
+本轮检索截止与重叠窗口见 [2026-09-21 周检记录](notes/weekly-search-2026-09-21.md)；本次配置核读与补录见 [综述证据记录](notes/survey-evidence-2026-09-21.md)及[过程反馈补证](notes/survey-followup-2026-09-21.md)。历史记录保留在 [总体检索](notes/frontier-search-2026-09-15.md) 与 [潜在推理更新](notes/latent-reasoning-update-2026-09-17.md)。
 
 <a id="papers"></a>
 ## 论文清单
 
 - [思维链与推理学习](#cot)（8）
 - [潜在推理与偏好表示](#latent)（19）
-- [强化学习与奖励设计](#rl)（9）
+- [强化学习与奖励设计](#rl)（10）
 - [推理时扩展与自适应预算](#tts)（15）
 - [推理蒸馏与效率](#distillation)（16）
 - [交互与智能体推荐](#agents)（11）
@@ -94,7 +94,7 @@
 
 **2026-07 · arXiv** · `CoT` `SID` `结构化路由` `序列推荐`
 
-在 SID 层级及语义邻接结构上学习 Match、Lateral Jump、Explore 路由，先产生结构化轨迹再生成 SID。直接预测和路由模式涉及输入信息及采样预算差异；作者报告的收益随数据域变化，不将其解释为等预算的普遍提升。
+在 SID 层级及语义邻接结构上学习 Match、Lateral Jump、Explore 路由，先产生结构化轨迹再生成 SID。直接预测和路由的测试子集、输入及采样设置需逐配置核对；官方共享 SID trie 由完整测试历史与目标的并集构建，不能直接视为已核全目录。
 
 [论文](https://arxiv.org/abs/2607.24402) · [官方代码](https://github.com/caskcsg/CogRec)
 
@@ -421,6 +421,15 @@
 
 [论文](https://arxiv.org/abs/2505.16994) · [官方代码与模型入口](https://github.com/YRYangang/RRec)
 
+<a id="paper-flower"></a>
+### Flower: Process-Supervised LLM Recommenders via Flow-guided Tuning
+
+**2025-03 · SIGIR 2025** · `序列推荐` `过程监督` `GFlowNet` `标题生成`
+
+将物品奖励沿标题前缀树向上汇总，为合法后续 token 分支提供监督，并结合流平衡与 SFT 目标。它是多终点价值进入输出过程监督的先例；不将标题 token 过程等同于独立潜在思考状态，也不把经验频率拟合称为曝光去偏。
+
+[论文](https://arxiv.org/abs/2503.07377) · [正式出版元数据](https://api.crossref.org/works/10.1145/3726302.3729981) · [官方代码](https://github.com/Mr-Peach0301/Flower)
+
 <a id="tts"></a>
 ## 推理时扩展与自适应预算
 
@@ -605,7 +614,7 @@
 
 **2026-09 · arXiv** · `工业推荐` `训练期推理` `语义ID`
 
-其中 TGR-Reason 以目标首级 SID 监督训练期潜在状态，关闭 rollout（K=0）后离线导出完整 SID reason tokens，注入线上生成器。群体记忆检索是扩展设计，不属于正文表16的部署评测；训练、离线刷新和请求成本须分别核算。
+其中 TGR-Reason 以目标首级 SID 监督训练期潜在状态，关闭 rollout（K=0）后离线导出完整 SID reason tokens，注入线上生成器。DRI 条件支路保持原生成器的束搜索空间，缓存 SID 不是该支路的硬候选池；群体记忆检索不属于表16默认配置。
 
 [论文](https://arxiv.org/abs/2609.00986) · 官方代码：未核实
 
