@@ -6,7 +6,7 @@
 
 [入门路线](#start-here) · [论文清单](#papers) · [近期必读](#frontier) · [前沿地图](docs/frontier-map.md) · [方法对照](docs/method-matrix.md) · [证据卡片](docs/frontier-reading.md) · [基准选型](docs/benchmarks.md) · [参与贡献](CONTRIBUTING.md)
 
-**最近整理：2026-09-21** · 97 篇文献：74 篇核心方法、6 项基准、7 篇评测研究、1 篇综述、9 篇背景 · 17 篇精选卡片
+**最近整理：2026-09-21** · 100 篇文献：76 篇核心方法、6 项基准、7 篇评测研究、2 篇综述、9 篇背景 · 17 篇精选卡片
 
 ## 收录范围
 
@@ -77,13 +77,13 @@
 ## 论文清单
 
 - [思维链与推理学习](#cot)（7）
-- [潜在推理与偏好表示](#latent)（18）
+- [潜在推理与偏好表示](#latent)（19）
 - [强化学习与奖励设计](#rl)（9）
 - [推理时扩展与自适应预算](#tts)（15）
-- [推理蒸馏与效率](#distillation)（15）
+- [推理蒸馏与效率](#distillation)（16）
 - [交互与智能体推荐](#agents)（10）
 - [评测、基准与有效性证据](#benchmarks)（13）
-- [综述与研究路线](#surveys)（1）
+- [综述与研究路线](#surveys)（2）
 - [相关背景](#background)（9）
 
 <a id="cot"></a>
@@ -264,6 +264,15 @@
 先用潜在思考形成意图假设，再通过扩散细化表示，并以 GRPO 联合对齐排名目标。
 
 [论文](https://arxiv.org/abs/2602.09744) · 官方代码：未核实
+
+<a id="paper-care"></a>
+### CARE: Bringing Reasoning to Generative Recommendation Through the Lens of Cascaded Ranking
+
+**2026-02 · arXiv** · `生成式推荐` `语义ID` `潜在推理` `并行计算`
+
+在每级物品 token 生成前加入并行查询向量，并通过渐进注意力掩码逐步引入更细粒度的历史信息；用查询多样性正则缓解同质偏好计算。这里增加的是并行中间计算，不应当作串行思维链步数。
+
+[论文](https://arxiv.org/abs/2602.03692) · [官方代码](https://github.com/Linxyhaha/CARE)
 
 <a id="paper-plr"></a>
 ### PLR：Parallel Latent Reasoning for Sequential Recommendation
@@ -618,6 +627,15 @@
 
 [论文](https://arxiv.org/abs/2607.29010) · 官方代码：未核实 · [证据卡片](docs/frontier-reading.md#evoreason)
 
+<a id="paper-diffusion-gr2"></a>
+### Diffusion-GR2: Diffusion Generative Reasoning Re-ranker
+
+**2026-07 · arXiv · 进行中的工作** · `重排` `CoT` `扩散` `在策略蒸馏` `RL`
+
+把自回归推理重排器转换为块扩散模型，通过转换微调、在策略蒸馏和排序奖励优化，并行生成文字推理与候选排列。实验针对 10 个召回候选；解码吞吐不等于全库推荐的端到端时延，扩散去噪也不等于无文字潜在推理。
+
+[论文](https://arxiv.org/abs/2607.01170) · 官方代码：未核实
+
 <a id="paper-trialigngr"></a>
 ### TriAlignGR: Triangular Multitask Alignment with Multimodal Deep Interest Mining for Generative Recommendation
 
@@ -907,6 +925,15 @@
 从智能体辅助推荐、作为推荐器、作为用户模拟器等角色梳理自主信息获取，讨论轨迹评测和模拟器校准。作为领域导航，单列于新方法和基准之外。
 
 [论文](https://arxiv.org/abs/2607.04433)
+
+<a id="paper-reasoning-aware-survey"></a>
+### Towards Reasoning-Aware Recommender Systems: A Survey in the LLM Era
+
+**2025-11 · TechRxiv 预印本** · `综述` `CoT` `潜在推理` `检索增强` `评测`
+
+按文本、潜在和检索增强推理梳理推荐方法，并比较推理空间、获取方式、灵活性与数据来源，讨论训练、效率和评测。日期采用 TechRxiv v1 封面的 2025-11-11；作者主页所列 TKDE submitted 不表示已正式发表。
+
+[作者论文入口](https://junliang-yu.github.io/publications/) · [固定版本与访问记录](notes/survey-backfill-2026-09-21.md)
 
 <a id="background"></a>
 ## 相关背景
