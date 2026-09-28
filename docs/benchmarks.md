@@ -2,18 +2,22 @@
 
 [返回首页](../README.md) · [评测记录模板](evaluation.md) · [方法对照](method-matrix.md) · [前沿地图](frontier-map.md)
 
-**核实日期：2026-09-15。** 这 6 个资源分别测量候选决策、交互可靠性、前提诊断、多任务能力、领域效用或模态证据。先按研究问题选协议，再比较模型；不要把它们汇总成一个没有任务说明的总榜。
+**最近补充核实：2026-09-28。** 这 8 个资源分别测量候选决策、交互可靠性、前提诊断、多任务能力、领域效用或模态证据。先按研究问题选协议，再比较模型；不要把它们汇总成一个没有任务说明的总榜。
 
-## 六个官方资源
+## 八个官方资源
 
 | 资源 | 候选空间与用户来源 | 约束 / 测量对象 | 主要指标 | 可用资源与边界 |
 | --- | --- | --- | --- | --- |
+| [RecToolBench](https://github.com/ShawnChenn/RecToolBench) | 三域1,288个合成任务；13个MCP服务器、32个工具 | 模糊意图的参数依据、工具依赖及串并行规划 | 执行成功、工具选择、Hit Ratio；轨迹由模型裁判评分 | 任务、工具服务、运行与评测脚本；L4没有唯一参考工作流，受控服务不代表生产延迟 |
+| [PRAGMA](https://github.com/yuhyojeong/PRAGMA) | 100个合成用户、400个个性化建议查询；长期会话 | 兴趣与事件演化、错误前提、跨会话依据使用 | 会话证据Recall/Exact Recall；建议Alignment/Grounding由模型裁判评分 | [数据](https://huggingface.co/datasets/stellahj/PRAGMA)实际含会话、查询与指标文件；不是固定物品目录或真人满意度 |
 | [τ-Rec](https://github.com/nbharaths/tau-rec) | 153 部电影目录，60 项任务；LLM 模拟用户 | 结构化属性约束、何时透露偏好、工具、策略遵守 | `pass^k` 连续成功可靠性；程序化校验 | 目录、任务、运行器、消融、轨迹和榜单；`g0`/`g1` 运行规范不同，作者明确不能直接混比 |
 | [RPCBench](https://github.com/ZhongruChen/RPCBench) | 五域共 4,623 个合成并筛选的请求实例；可见证据快照 | 十类错误前提；候选不是统一排序池，重点是诊断请求 | Detection、Localization、Strategy、Faithfulness；三模型裁判 | 请求、提示、50,853 条被测响应、裁判聚合及分析；不能把裁判评分当客观约束验证 |
 | [AgentRecBench](https://huggingface.co/datasets/SGJQovo/AgentRecBench) | 用户/物品/评论查询环境；每例 1 正 + 19 负；历史日志为真值 | 冷启动、长短期兴趣变化、数据可见性与工具规划 | HR@1、HR@3、HR@5 | 数据及[官方挑战环境](https://tsinghua-fib-lab.github.io/AgentSocietyChallenge/pages/overview.html)；不是实时真人满意度实验；数据浏览器当前解析报错不等于文件不可下载 |
 | [RecIF-Bench / OpenOneRec](https://github.com/Kuaishou-OneRec/OpenOneRec) | 短视频/广告/商品的工业日志；全目录物品生成等多种任务，并非统一小候选池 | 八任务：语义对齐、预测、指令遵循、推荐解释 | Pass@1/32、Recall@32、AUC、LLM-as-Judge（随任务变化） | 数据处理、训练、评测、模型入口；解释得分不能证明推理对决策的因果贡献 |
 | [Conv-FinRe](https://github.com/The-FinAI/Conv-FinRe) | 10 股票受控宇宙；真实行情与人类选择轨迹构成模拟咨询对话 | 行为模仿和拟合效用的分离；长期偏好、冲突建议 | uNDCG、MRR、HR@1/3、与专家排序的 Kendall τ | [数据集合](https://huggingface.co/collections/TheFinAI/conv-finre)、构造 notebooks、评测框架入口；效用函数是建模参照，非真实投资回报保证 |
 | [MusiCRS](https://github.com/rohan2810/MusiCRS) | 477 条真实 Reddit 音乐对话；约 100 候选，含按赞数选出的最多 10 个正例 | 音频/文本/联合输入消融，跨模态证据使用 | Recall@K、nDCG@K、MRR 等 | [数据](https://huggingface.co/datasets/rohan2810/MusiCRS)、处理与基线脚本；音频通过 YouTube 链接关联，文件资源应单独核可用性 |
+
+新增两项核对[RecToolBench v1 §2–4](https://arxiv.org/html/2609.30717v1)及[PRAGMA v2 §3–5](https://arxiv.org/html/2609.09664v2)，资源访问与版本详见[本周记录](../notes/weekly-search-2026-09-28.md)。
 
 表格依据上述官方仓库或作者链接的数据卡；更细协议见 [AgentRecBench §4.4](https://arxiv.org/html/2505.19623v2)、[RecIF-Bench §3.1–3.3](https://arxiv.org/html/2512.24762v1)、[Conv-FinRe §3](https://arxiv.org/html/2602.16990v2)、[MusiCRS §2–3](https://arxiv.org/html/2509.19469v2)。
 
@@ -23,6 +27,8 @@
 
 | 你的问题 | 推荐起点 | 至少保留的控制组 |
 | --- | --- | --- |
+| 模糊请求下工具规划是否可执行且有依据 | RecToolBench | 固定工具与预算；分别报告程序指标、裁判、调用数及耗时 |
+| 长期偏好证据是否被用于建议 | PRAGMA | 相同输入长度下的检索、oracle会话和错误前提对照；oracle摘要不是同信息条件 |
 | 工具与规划是否提升给定候选决策 | AgentRecBench | 同候选、同证据的无工具/固定工具流程 |
 | 多轮中能否持续满足用户约束 | τ-Rec | 相同运行规范与模拟器；重复运行；披露信息时机 |
 | 模型能否发现请求中的错误前提 | RPCBench | 无错误前提请求；裁判家族与长度敏感性检查 |

@@ -6,7 +6,7 @@
 
 [入门路线](#start-here) · [论文清单](#papers) · [近期必读](#frontier) · [前沿地图](docs/frontier-map.md) · [方法对照](docs/method-matrix.md) · [证据卡片](docs/frontier-reading.md) · [基准选型](docs/benchmarks.md) · [参与贡献](CONTRIBUTING.md)
 
-**最近整理：2026-09-21** · 104 篇文献：79 篇核心方法、6 项基准、8 篇评测研究、2 篇综述、9 篇背景 · 17 篇精选卡片
+**最近整理：2026-09-28** · 114 篇文献：84 篇核心方法、8 项基准、11 篇评测研究、2 篇综述、9 篇背景 · 17 篇精选卡片
 
 ## 收录范围
 
@@ -58,6 +58,8 @@
 
 | 近期入口 | 为什么读 | 证据边界 |
 | --- | --- | --- |
+| [Evo-Rec](#paper-evo-rec)、[检索归因](#paper-retrieval-grounded-credit) · 2026-09 | 轨迹筛选与兴趣片段奖励 | 目标命中不等于多兴趣效用；训练与预测检索预算分列 |
+| [RecToolBench](#paper-rectoolbench)、[PRAGMA](#paper-pragma) · 2026-09 | 工具依赖与长期偏好证据 | 程序验证、模型裁判和用户满意度不能互换 |
 | [NarraLite](#paper-narralite)、[P³Rec](#paper-p3rec) · 2026-09 | 潜在未来语义与先验/后验偏好监督 | 非个性化续集和个性化推荐须分开比较 |
 | [LIGE-GR · 2026-09](#paper-lige-gr) | 未来价值引导列表搜索 | 更宽 beam 的收益与价值目标变化需隔离 |
 | [SelfDR · 2026-09](#paper-selfdr) | 用推理自蒸馏支持直接预测 | 需计入教师与训练成本 |
@@ -69,25 +71,34 @@
 | [EvoReason](#paper-evoreason)、[LaRec](#paper-larec)、[HiLaR](#paper-hilar) · 2026-07 | 潜在轨迹的对齐、演化与逐层监督 | 组件收益不等于语义忠实性 |
 | [IBA · 2026-07](#paper-where-reasoning-matters) | 固定预算下按 SID 位置分配计算 | 不同于自然语言 CoT 扩展 |
 
-**深入使用：** [方法与证据矩阵](docs/method-matrix.md) · [12 篇前沿证据卡](docs/frontier-reading.md) · [5 篇基础阅读卡](docs/reading-notes.md) · [6 个基准选型表](docs/benchmarks.md)。
+**深入使用：** [方法与证据矩阵](docs/method-matrix.md) · [12 篇前沿证据卡](docs/frontier-reading.md) · [5 篇基础阅读卡](docs/reading-notes.md) · [8 个基准选型表](docs/benchmarks.md)。
 
-本轮检索截止与重叠窗口见 [2026-09-21 周检记录](notes/weekly-search-2026-09-21.md)；本次配置核读与补录见 [综述证据记录](notes/survey-evidence-2026-09-21.md)及[过程反馈补证](notes/survey-followup-2026-09-21.md)。历史记录保留在 [总体检索](notes/frontier-search-2026-09-15.md) 与 [潜在推理更新](notes/latent-reasoning-update-2026-09-17.md)。
+本轮检索截止与重叠窗口见 [2026-09-28 周检记录](notes/weekly-search-2026-09-28.md)；前轮综述配置核读与补录见 [综述证据记录](notes/survey-evidence-2026-09-21.md)及[过程反馈补证](notes/survey-followup-2026-09-21.md)。历史记录保留在 [总体检索](notes/frontier-search-2026-09-15.md) 与 [潜在推理更新](notes/latent-reasoning-update-2026-09-17.md)。
 
 <a id="papers"></a>
 ## 论文清单
 
-- [思维链与推理学习](#cot)（8）
+- [思维链与推理学习](#cot)（9）
 - [潜在推理与偏好表示](#latent)（19）
-- [强化学习与奖励设计](#rl)（10）
+- [强化学习与奖励设计](#rl)（12）
 - [推理时扩展与自适应预算](#tts)（15）
 - [推理蒸馏与效率](#distillation)（16）
-- [交互与智能体推荐](#agents)（11）
-- [评测、基准与有效性证据](#benchmarks)（14）
+- [交互与智能体推荐](#agents)（13）
+- [评测、基准与有效性证据](#benchmarks)（19）
 - [综述与研究路线](#surveys)（2）
 - [相关背景](#background)（9）
 
 <a id="cot"></a>
 ## 思维链与推理学习
+
+<a id="paper-evo-rec"></a>
+### Learning Better Reasoning for Generative Recommendation with Semantic IDs
+
+**2026-09 · arXiv** · `CoT` `SID` `轨迹筛选` `RL`
+
+Evo-Rec 用目标 SID 概率增益筛选教师轨迹，再以目录约束生成的排名奖励优化推理。目标增益不等于语义正确性；官方实现含三阶段脚本，部分训练数据仍待发布。
+
+[论文](https://arxiv.org/abs/2609.29973) · [官方代码](https://github.com/mengdanzhu/evo-rec)
 
 <a id="paper-cogrec-routing"></a>
 ### CogRec: Structure-Cognitive Fast-and-Slow Reasoning for Generative Recommendation
@@ -340,6 +351,24 @@
 <a id="rl"></a>
 ## 强化学习与奖励设计
 
+<a id="paper-retrieval-grounded-credit"></a>
+### From Interests to Semantic IDs: Retrieval-Grounded Credit Assignment for Generative Recommendation
+
+**2026-09 · arXiv** · `兴趣推理` `SID` `检索奖励` `信用分配`
+
+用冻结检索器检查各兴趣查询对目标物品的检索效果，将优势分配到对应兴趣文本。主评测采用全目录 beam=10，奖励检索 top-50 是另一协议；目标辅助的 oracle 查询选择仅为上界，未证明未点击兴趣的效用。
+
+[论文](https://arxiv.org/abs/2609.29983) · [官方代码](https://github.com/YuFan-Microsoft/Retrieval-Grounded-Credit-Assignment-for-Generative-Recommendation)
+
+<a id="paper-query-level-credit"></a>
+### Generative Query Suggestion via Intent Coverage and Query-Level Credit Assignment
+
+**2026-09 · arXiv** · `CoT` `RL` `查询推荐` `列表覆盖`
+
+面向会话后续问题推荐，用意图 CoT 与直接生成混合监督，再结合查询级质量和列表级意图覆盖奖励。信用分配对象是输出查询片段，不能等同中间推理步骤监督；工业 CTR、人工判断与目标同族诊断分别解释。
+
+[论文](https://arxiv.org/abs/2609.19209) · 官方代码：未核实
+
 <a id="paper-rporec"></a>
 ### RPORec: Reinforced Preference Optimization for Reasoning-Augmented Recommendations
 
@@ -440,7 +469,7 @@
 
 **2026-09 · arXiv** · `列表推荐` `未来价值` `搜索` `工业推荐`
 
-把列表前缀视为决策状态，通过继续观看概率和未来价值估计引导 Palette 束搜索，显式考虑当前选择对后续列表的影响。属于结构化决策搜索；其闭式未来价值估计不等同另训价值网络或文字 CoT。
+把列表前缀视为决策状态，通过继续观看概率和未来价值估计引导 Palette 束搜索，显式考虑当前选择对后续列表的影响。属于结构化决策搜索；其闭式未来价值估计不等同另训价值网络或文字 CoT。v2 评测在既定候选池上生成列表；单纯增宽 beam 与同时改变列表目标/未来估计的配置需分开比较。
 
 [论文](https://arxiv.org/abs/2609.18148) · 官方代码：未核实
 
@@ -720,6 +749,24 @@
 <a id="agents"></a>
 ## 交互与智能体推荐
 
+<a id="paper-agentrecommender"></a>
+### AgentRecommender: LLM Agents Enable Customizable Recommender Systems on the User Side
+
+**2026-09 · arXiv** · `智能体` `图探索` `工具规划` `用户约束`
+
+从平台的黑盒物品关联推荐出发，智能体选择扩展节点并收集候选，最后按用户属性约束生成列表。主要检验属性覆盖与约束满足；扩展会改变候选支持，不能把相对固定候选重排的收益全部归为更强推理。
+
+[论文](https://arxiv.org/abs/2609.31166) · 官方代码：未核实
+
+<a id="paper-spotify-bootstrapping"></a>
+### Bootstrapping Conversational Recommendation Agents At Spotify
+
+**2026-09 · arXiv** · `智能体` `多轮规划` `自改进` `工业推荐`
+
+将单轮请求扩展为可复用多轮对话计划，用轨迹对照与错误分析改进推荐智能体的提示和工具描述。离线裁判质量与线上整套对话产品的 A/B 效果分别报告；后者不单独隔离规划自改进的贡献。
+
+[论文](https://arxiv.org/abs/2609.30297) · 官方代码：未核实
+
 <a id="paper-re2a"></a>
 ### Re2A: Situated Conversational Recommendation via Rubric-based Preference Reasoning and Alignment
 
@@ -822,7 +869,52 @@
 <a id="benchmarks"></a>
 ## 评测、基准与有效性证据
 
-包含 6 项评测资源与 7 篇有效性/协议研究。任务与指标不能直接合成统一排名，详见 [基准选型](docs/benchmarks.md)。
+包含 8 项评测资源与 11 篇有效性/协议研究。任务与指标不能直接合成统一排名，详见 [基准选型](docs/benchmarks.md)。
+
+<a id="paper-rectoolbench"></a>
+### RecToolBench: Benchmarking Recommendation-Specific Tool Orchestration under Fuzzy User Intent
+
+**2026-09 · arXiv** · `基准` `工具规划` `模糊意图`
+
+在三域 MCP 工具环境中，用合成任务检查单工具、并行、串行及混合规划。执行与命中规则和模型裁判分别报告；工具可执行不代表最终推荐有依据，受控环境也不等同线上延迟与满意度。
+
+[论文](https://arxiv.org/abs/2609.30717) · [官方代码](https://github.com/ShawnChenn/RecToolBench)
+
+<a id="paper-sid-repro"></a>
+### What Makes a Good Semantic ID for Generative Recommendation? A Reproducibility Study
+
+**2026-09 · arXiv** · `评测研究` `SID` `控制实验`
+
+比较 SID 编码与生成推荐表现，为推理方法的编码对照提供依据。完整方法比较保留各自推断设置，受控分析则固定 TIGER；采用全局时间切分、warm-only 多目标计分及热门物品补足，不能把不同编码结果直接解释为推理贡献。
+
+[论文](https://arxiv.org/abs/2609.24430) · [官方代码](https://github.com/layingfish/SID-Repro)
+
+<a id="paper-sponsorship-bias"></a>
+### Whom Do AI Agents Work For? Role Assignment Induces Sponsorship Bias in LLM Recommenders
+
+**2026-09 · arXiv** · `评测研究` `角色委派` `推理可靠性`
+
+在受控酒店候选中改变智能体受谁委派及赞助披露，比较推荐选择、推理文本与思考深度。作者报告角色会改变对赞助项的处理；生成轨迹评分不等于内部机制忠实性，结论不直接外推真实线上广告。
+
+[论文](https://arxiv.org/abs/2609.17989) · 官方代码：未核实
+
+<a id="paper-pragma"></a>
+### PRAGMA: Evaluating Personalized Guidance with Memory Alignment in Lifelong Conversations
+
+**2026-09 · arXiv** · `基准` `长期记忆` `个性化建议` `证据使用`
+
+通过合成长期对话中的事件、兴趣演化与错误前提，评估跨会话检索及个性化建议。证据召回与模型裁判的建议对齐、依据使用分别计分；不是固定目录命中率或真实用户满意度。
+
+[论文](https://arxiv.org/abs/2609.09664) · [官方代码](https://github.com/yuhyojeong/PRAGMA)
+
+<a id="paper-housing-optimization"></a>
+### Following the Preference, Missing the Optimum: Compliance Without Optimization in AI Housing Recommendation
+
+**2026-09 · arXiv** · `评测研究` `约束满足` `决策质量`
+
+用合成租房偏好和真实房源组成可核查候选池，区分满足约束与避免被其他候选严格支配。收录为推荐决策有效性研究：遵从偏好不自动表示选择最优；该审计不单独检验 CoT 的因果贡献。
+
+[论文](https://arxiv.org/abs/2609.10856) · 官方代码：未核实
 
 <a id="paper-transparent-upr"></a>
 ### Reproducing Transparent and Scrutable Recommendations: Exploring Open-Weight Models via Natural-Language User Profiles
